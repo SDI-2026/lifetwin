@@ -1,0 +1,1001 @@
+# LifeSim
+
+### Simulate Your Future. Change Your Present.
+
+**Hackathon:** Cal Hacks 2026
+**Project Type:** AI / Machine Learning / HealthTech
+**Platform:** Web Application
+**Development Window:** 48 hours
+**Priority:** Functional MVP with an impressive live demonstration
+
+---
+
+# 1. Project Overview
+
+## 1.1 Concept
+
+LifeSim is an AI-powered longevity simulator that allows users to explore how their lifestyle choices are associated with long-term health outcomes.
+
+By analyzing historical health and mortality data, LifeSim estimates a user's survival probability and visualizes how different lifestyle scenarios compare.
+
+Users provide information about their current health and habits, including sleep, exercise, diet, smoking, and alcohol consumption.
+
+LifeSim then generates a personalized health dashboard featuring:
+
+* Estimated survival probabilities over time.
+* An interactive visualization of potential future health trajectories.
+* The ability to simulate lifestyle changes.
+* Side-by-side comparisons of alternative futures.
+* AI-generated explanations and personalized health recommendations.
+
+The central experience is simple:
+
+**What if you could see how the decisions you make today might affect your future?**
+
+LifeSim transforms statistical health information into an interactive experience.
+
+## 1.2 Problem
+
+Most people understand that certain behaviors, such as smoking, inactivity, and insufficient sleep, can negatively affect long-term health.
+
+However, understanding the relative importance of different risk factors is difficult.
+
+Existing health applications primarily track current behavior, including steps, calories, heart rate, and sleep.
+
+Few provide an accessible, interactive way to explore how combinations of lifestyle characteristics relate to long-term health outcomes.
+
+LifeSim addresses this problem by allowing users to explore modeled health scenarios and identify potentially beneficial changes.
+
+## 1.3 Solution
+
+LifeSim combines three major components:
+
+**1. Machine Learning Survival Model**
+
+A model trained on real health and mortality data estimates long-term survival probabilities.
+
+**2. Interactive Lifestyle Simulator**
+
+Users modify lifestyle variables and observe changes in predicted survival curves.
+
+**3. AI Health Advisor**
+
+An LLM interprets model results, explains relevant risk factors, and generates evidence-based recommendations.
+
+Importantly, LifeSim distinguishes statistical associations from causal effects. Its simulations represent modeled risk scenarios rather than guaranteed consequences of behavior changes.
+
+---
+
+# 2. Core User Experience
+
+## 2.1 Landing Page
+
+The landing page introduces LifeSim with the headline:
+
+**"Your future isn't written. Explore what could change it."**
+
+Subheading:
+
+"Discover how your lifestyle relates to long-term health through AI-powered longevity simulations."
+
+Primary CTA:
+
+**Simulate My Future →**
+
+Design direction:
+
+* Dark background.
+* Modern, minimal typography.
+* Animated survival curves.
+* Subtle gradients.
+* Smooth transitions.
+* Premium, futuristic aesthetic.
+
+The application should feel like an advanced scientific visualization tool rather than a traditional medical portal.
+
+## 2.2 User Onboarding
+
+Users complete a short questionnaire.
+
+### Demographics
+
+| Variable | Input Type |
+| -------- | ---------- |
+| Age      | Number     |
+| Sex      | Selection  |
+| Height   | Number     |
+| Weight   | Number     |
+
+### Lifestyle
+
+| Variable                 | Input Type                       |
+| ------------------------ | -------------------------------- |
+| Average sleep duration   | Slider, 3–12 hours               |
+| Weekly physical activity | Slider, minutes                  |
+| Smoking status           | Never / Former / Current         |
+| Alcohol consumption      | Drinks per week                  |
+| Diet quality             | Simplified dietary questionnaire |
+
+### Optional Health Information
+
+| Variable                 | Input Type |
+| ------------------------ | ---------- |
+| Systolic blood pressure  | Number     |
+| Diastolic blood pressure | Number     |
+| Diabetes diagnosis       | Yes / No   |
+| Cholesterol              | Number     |
+
+Only variables supported by the trained model should affect mortality estimates.
+
+If a variable is unavailable in the final model, it may be omitted from the MVP or clearly identified as informational.
+
+**User experience requirement:** Onboarding should take less than 60 seconds.
+
+---
+
+# 3. Main Dashboard
+
+After onboarding, users are directed to their LifeSim dashboard.
+
+## 3.1 Longevity Overview
+
+The dashboard displays:
+
+**Your Estimated 10-Year Survival Probability**
+
+Example:
+
+98.4%
+
+Additional information:
+
+* Estimated 20-year survival probability, where supported by follow-up data.
+* Comparison with people of similar age and demographic characteristics.
+* Most significant modeled risk factors.
+* Uncertainty or confidence information where valid.
+
+All predictions must be generated by the actual model.
+
+Do not hardcode survival estimates.
+
+For users whose ages or health profiles fall outside the validated training population, the application should display an appropriate limitation instead of an unreliable prediction.
+
+## 3.2 Survival Curve
+
+The primary dashboard visualization is an interactive survival curve.
+
+**X-axis:** Years into the future.
+
+**Y-axis:** Estimated probability of survival.
+
+The graph displays a survival function:
+
+S(t) = P(T > t)
+
+Where:
+
+* T represents time until death.
+* t represents time elapsed from baseline.
+* S(t) represents the estimated probability of surviving beyond time t.
+
+The visualization must support:
+
+* Smooth animations.
+* Hover tooltips.
+* Multiple comparison curves.
+* Interactive scenario updates.
+* Clearly labeled prediction horizons.
+
+Predictions must not extend beyond the model's defensible follow-up horizon.
+
+## 3.3 Lifestyle Controls
+
+Below the graph, users can modify lifestyle variables.
+
+Examples:
+
+**Sleep Duration**
+
+3 hours ━━━━━●━━━━ 12 hours
+
+**Weekly Exercise**
+
+0 minutes ━━━●━━━━ 600 minutes
+
+**Smoking**
+
+Never | Former | Current
+
+**Alcohol Consumption**
+
+0 ━━━●━━━━ 30+ drinks/week
+
+As users modify their lifestyle characteristics, the application recalculates the modeled survival curve.
+
+The previous curve remains visible in a muted color.
+
+The new curve appears in a contrasting color.
+
+Animations should visually communicate the difference.
+
+Example:
+
+Current profile: 93.1% estimated 10-year survival.
+
+Alternative profile: 95.0% estimated 10-year survival.
+
+**Difference: +1.9 percentage points**
+
+These numbers are illustrative. The final application must calculate them from its actual model.
+
+A persistent label should explain that these are comparisons between modeled profiles, not verified causal effects of changing habits.
+
+---
+
+# 4. Compare Your Futures
+
+This is LifeSim's primary demonstration feature.
+
+## 4.1 Overview
+
+Users create two alternative lifestyle scenarios.
+
+### Future A: Current Lifestyle
+
+* 5 hours of sleep.
+* 30 minutes of weekly exercise.
+* Current smoker.
+* Low diet quality.
+
+### Future B: Improved Lifestyle
+
+* 8 hours of sleep.
+* 180 minutes of weekly exercise.
+* Nonsmoker.
+* Higher diet quality.
+
+LifeSim displays two survival curves on the same graph.
+
+### Key Outputs
+
+* Estimated survival probability for each scenario.
+* Percentage-point difference at a selected time horizon.
+* Risk factors contributing to the modeled difference.
+* AI explanation of the comparison.
+
+### Visual Design
+
+The comparison screen should have a split layout.
+
+**Left Panel: Current Future**
+
+Displays the original lifestyle profile.
+
+**Right Panel: Alternative Future**
+
+Displays the modified lifestyle profile.
+
+**Center: Survival Visualization**
+
+Displays both curves simultaneously.
+
+Users can save and compare multiple scenarios locally.
+
+## 4.2 Technical Behavior
+
+When a lifestyle variable changes:
+
+1. Update the scenario's feature vector.
+2. Validate the updated feature values.
+3. Send the feature vector to the prediction API.
+4. Generate a new survival curve.
+5. Calculate differences between scenarios.
+6. Animate the curve transition.
+7. Update the explanation panel.
+
+Predictions should be responsive enough to support interactive exploration.
+
+---
+
+# 5. AI Longevity Advisor
+
+## 5.1 Overview
+
+The AI advisor translates model predictions into understandable recommendations.
+
+Example user question:
+
+"What should I change first?"
+
+Example response:
+
+"Your current profile includes low weekly physical activity. Increasing activity toward established public-health recommendations may improve your long-term health. Your simulation also shows lower modeled mortality risk among profiles with greater activity."
+
+The advisor should distinguish between:
+
+* Statistical patterns identified by the model.
+* Established scientific evidence.
+* General health recommendations.
+
+## 5.2 Core Capabilities
+
+The advisor must:
+
+* Explain predictions in accessible language.
+* Identify important modeled risk factors.
+* Suggest realistic lifestyle improvements.
+* Answer questions about individual variables.
+* Compare alternative lifestyle scenarios.
+* Explain uncertainty and limitations.
+* Avoid presenting statistical associations as proven causal relationships.
+
+## 5.3 Implementation
+
+Use an LLM API with structured context containing:
+
+* User lifestyle profile.
+* Model prediction outputs.
+* Selected scenario comparisons.
+* Feature attribution results, if available.
+* Curated evidence-based health guidelines.
+
+The LLM must not independently invent survival probabilities.
+
+All numerical predictions must originate from the machine learning backend.
+
+---
+
+# 6. Machine Learning Architecture
+
+## 6.1 Dataset
+
+**Primary Dataset: NHANES**
+
+National Health and Nutrition Examination Survey.
+
+Provider: Centers for Disease Control and Prevention.
+
+NHANES contains demographic, lifestyle, examination, and laboratory information from nationally representative samples of the U.S. population.
+
+**Mortality Data: NCHS Linked Mortality Files**
+
+The linked mortality datasets provide information about mortality outcomes and follow-up periods for eligible survey participants.
+
+The public-use files cover adult participants and include follow-up time and vital status.
+
+### Key Data Sources
+
+NHANES:
+https://wwwn.cdc.gov/Nchs/Nhanes/
+
+Linked Mortality Files:
+https://www.cdc.gov/nchs/linked-data/mortality-files/index.html
+
+Use the 1999–2018 NHANES survey cycles with compatible mortality linkage, initially selecting a subset of cycles if necessary.
+
+The currently available linked mortality release includes follow-up through December 31, 2022.
+
+## 6.2 Dataset Preparation
+
+Required steps:
+
+1. Download selected NHANES demographic and health datasets.
+2. Download compatible linked mortality files.
+3. Merge datasets using the participant identifier `SEQN`.
+4. Filter to mortality-linkage-eligible adult participants.
+5. Select common features across survey cycles.
+6. Harmonize variable names and units.
+7. Handle missing values.
+8. Encode categorical features.
+9. Generate event and follow-up variables.
+10. Split the dataset into training and test sets.
+
+### Target Variables
+
+**Event**
+
+Whether a participant died during follow-up.
+
+Use the linked mortality variable `MORTSTAT`.
+
+**Duration**
+
+Observed follow-up time, measured in months or years.
+
+For interview-based follow-up, use `PERMTH_INT` when appropriate.
+
+Participants still alive at the end of follow-up are right-censored.
+
+Never label all surviving participants as if they had reached a known final lifespan.
+
+## 6.3 Features
+
+Initial candidate features:
+
+* Age.
+* Sex.
+* BMI.
+* Smoking status.
+* Physical activity.
+* Sleep duration.
+* Alcohol consumption.
+* Diabetes status.
+* Blood pressure.
+
+Dietary features may be added if data processing time permits.
+
+Feature inclusion must depend on actual dataset availability and comparability.
+
+For the first implementation, prioritize a smaller set of reliable features over an unnecessarily large dataset.
+
+## 6.4 Model Selection
+
+### Baseline: Cox Proportional Hazards Model
+
+The Cox model estimates mortality hazard from participant characteristics.
+
+Advantages:
+
+* Relatively fast training.
+* Interpretable coefficients.
+* Established survival-analysis methodology.
+* Suitable hackathon baseline.
+
+### Advanced Model: Random Survival Forest
+
+If time permits, train a random survival forest.
+
+Advantages:
+
+* Captures nonlinear relationships.
+* Models interactions between variables.
+* Produces individualized survival estimates.
+* Does not require a linear relationship between predictors and log hazard.
+
+### Recommended Implementation
+
+Python libraries:
+
+* pandas
+* numpy
+* scikit-learn
+* lifelines
+* scikit-survival, if available
+
+Train the Cox model first.
+
+Only move to a more complex model if validation results justify the change.
+
+## 6.5 Evaluation
+
+Evaluate model performance using:
+
+**Concordance Index (C-index)**
+
+Measures how well the model ranks participants by survival risk.
+
+**Brier Score**
+
+Measures prediction error at selected time horizons while accounting for censoring.
+
+**Calibration**
+
+Compares predicted survival probabilities with observed outcomes.
+
+Use an appropriate held-out test set and prevent leakage between training and evaluation.
+
+Where feasible, validate performance across age groups and demographic subgroups.
+
+Record the effective sample size, observed deaths, and follow-up duration.
+
+### Important Methodological Constraints
+
+LifeSim is an observational prediction system, not a validated causal inference engine.
+
+Changing one lifestyle variable while holding other variables constant generates a hypothetical prediction for a modified profile.
+
+It does not prove that making the corresponding real-world change would produce that exact outcome.
+
+The application must clearly communicate this distinction.
+
+---
+
+# 7. Technical Stack
+
+## Frontend
+
+**Framework:** Next.js
+
+**Language:** TypeScript
+
+**Styling:** Tailwind CSS
+
+**Components:** shadcn/ui
+
+**Graphs:** Recharts
+
+**Animations:** Framer Motion
+
+## Backend
+
+**Framework:** FastAPI
+
+**Language:** Python
+
+**ML Framework:** lifelines / scikit-survival
+
+**Model Serialization:** joblib
+
+**Data Processing:** pandas, numpy
+
+## AI
+
+LLM API for generating contextual explanations and recommendations.
+
+## Deployment
+
+**Frontend:** Vercel
+
+**Backend:** Render, Railway, or another Python-compatible hosting provider.
+
+Training should occur offline.
+
+Only serialized inference artifacts should be deployed.
+
+---
+
+# 8. Application Architecture
+
+```text
+                   USER
+                     |
+                     v
+              Next.js Frontend
+                     |
+        +------------+-------------+
+        |                          |
+        v                          v
+  Health Questionnaire       Dashboard UI
+        |                          |
+        +-------------+------------+
+                      |
+                      v
+                 FastAPI
+                      |
+          +-----------+-----------+
+          |                       |
+          v                       v
+    Survival Model          AI Advisor
+          |                       |
+          v                       v
+  Survival Predictions    Explanations
+          |                       |
+          +-----------+-----------+
+                      |
+                      v
+               LifeSim Dashboard
+```
+
+---
+
+# 9. API Specification
+
+## POST /api/predict
+
+Accepts a health profile and returns a survival prediction.
+
+### Request
+
+```json
+{
+  "age": 35,
+  "sex": "male",
+  "bmi": 24.5,
+  "sleep_hours": 7,
+  "exercise_minutes_weekly": 150,
+  "smoking_status": "never",
+  "alcohol_drinks_weekly": 2
+}
+```
+
+The schema should be adjusted to match the final trained model.
+
+### Response
+
+```json
+{
+  "prediction": {
+    "survival_5_year": 0.992,
+    "survival_10_year": 0.975
+  },
+  "survival_curve": [
+    {
+      "year": 0,
+      "probability": 1.0
+    },
+    {
+      "year": 5,
+      "probability": 0.992
+    },
+    {
+      "year": 10,
+      "probability": 0.975
+    }
+  ],
+  "model_version": "lifesim-v1"
+}
+```
+
+All displayed numbers are examples of the response schema, not actual estimates.
+
+Return only time horizons supported by the validated model.
+
+## POST /api/compare
+
+Accepts two health profiles.
+
+Returns:
+
+* Survival curves for each profile.
+* Differences at supported prediction horizons.
+* Changes in modeled risk.
+* Relevant feature-level explanations, when available.
+
+## POST /api/advisor
+
+Accepts:
+
+* User profile.
+* Survival model results.
+* Scenario comparisons.
+* User question.
+
+Returns:
+
+* Natural-language explanation.
+* Relevant evidence-based recommendations.
+* Appropriate uncertainty and safety context.
+
+---
+
+# 10. Frontend Pages
+
+## Page 1: Landing
+
+Route: `/`
+
+Components:
+
+* Hero section.
+* Animated example survival curve.
+* Product explanation.
+* Start Simulation button.
+
+## Page 2: Onboarding
+
+Route: `/onboarding`
+
+Components:
+
+* Multi-step questionnaire.
+* Sliders and selections.
+* Input validation.
+* Progress indicator.
+
+## Page 3: Dashboard
+
+Route: `/dashboard`
+
+Components:
+
+* Survival probability display.
+* Interactive survival curve.
+* Lifestyle adjustment controls.
+* Scenario comparison button.
+* AI explanation panel.
+
+## Page 4: Compare
+
+Route: `/compare`
+
+Components:
+
+* Two lifestyle profiles.
+* Overlaid survival curves.
+* Summary of estimated differences.
+* AI-generated scenario comparison.
+
+The dashboard and comparison page are the highest priorities.
+
+---
+
+# 11. Design Requirements
+
+## Visual Identity
+
+Name: **LifeSim**
+
+Tagline: **Simulate Your Future. Change Your Present.**
+
+### Design Style
+
+* Dark mode by default.
+* Minimal, scientific aesthetic.
+* Smooth interactive data visualization.
+* Large numerical displays.
+* Subtle gradients.
+* Clean typography.
+* Responsive layout.
+
+### Suggested Colors
+
+Background: `#080B12`
+
+Primary accent: `#7C8CFF`
+
+Positive scenario: `#39D5A0`
+
+Baseline scenario: `#8C95A8`
+
+Text: `#F4F6FB`
+
+### Design Inspiration
+
+The interface should combine the polish of a premium consumer application with the data visualization capabilities of a scientific analytics dashboard.
+
+Avoid an overly clinical appearance.
+
+---
+
+# 12. Hackathon Development Plan
+
+## Phase 1: Dataset and Model
+
+**Priority: Critical**
+
+Tasks:
+
+* Download mortality-linked NHANES data.
+* Select and merge features.
+* Implement preprocessing.
+* Train baseline survival model.
+* Evaluate model performance.
+* Export trained model.
+* Implement prediction API.
+
+Deliverable:
+
+A working API returning real survival probabilities.
+
+## Phase 2: Frontend
+
+**Priority: Critical**
+
+Tasks:
+
+* Build landing page.
+* Build onboarding form.
+* Build main dashboard.
+* Implement interactive survival curves.
+* Integrate prediction API.
+
+Deliverable:
+
+Users can enter health information and receive a model-generated survival curve.
+
+## Phase 3: Scenario Comparison
+
+**Priority: Critical**
+
+Tasks:
+
+* Implement editable lifestyle parameters.
+* Recalculate predictions when inputs change.
+* Overlay baseline and alternative survival curves.
+* Display numerical differences.
+* Animate graph transitions.
+
+Deliverable:
+
+Users can interactively compare two modeled futures.
+
+## Phase 4: AI Advisor
+
+**Priority: High**
+
+Tasks:
+
+* Connect LLM API.
+* Provide structured model predictions.
+* Implement conversational interface.
+* Add evidence-based recommendation context.
+* Prevent fabricated numerical predictions.
+
+Deliverable:
+
+An AI assistant that explains the user's model results and identifies possible health improvements.
+
+## Phase 5: Polish and Demo
+
+**Priority: High**
+
+Tasks:
+
+* Refine visual design.
+* Improve animations.
+* Optimize API responsiveness.
+* Test representative user profiles.
+* Verify all displayed numerical predictions.
+* Prepare a reliable demonstration.
+* Deploy application.
+
+---
+
+# 13. Minimum Viable Product
+
+The MVP is considered complete when:
+
+1. A survival analysis model has been trained on real mortality-linked health data.
+2. A user can enter a health profile through the website.
+3. The backend generates a survival curve for supported users.
+4. The frontend displays the curve interactively.
+5. Users can change lifestyle variables and compare modeled scenarios.
+6. The application communicates uncertainty and the limitations of observational predictions.
+7. The entire application can be demonstrated through a deployed URL.
+
+The AI advisor is a high-priority enhancement, but should not delay the core predictive simulation.
+
+---
+
+# 14. Optional Features
+
+Implement only after the MVP is functional.
+
+### Biological Age Comparison
+
+Estimate a risk-equivalent age or other interpretable relative-risk measure, provided the model and validation support it.
+
+Do not describe this as a clinically validated biological age without an appropriate model.
+
+### Future Self Visualization
+
+Generate stylized representations of a user's possible future self.
+
+These images would be illustrative, not medically accurate forecasts of their appearance.
+
+### Saved Timelines
+
+Allow users to save and revisit hypothetical lifestyle scenarios.
+
+### Wearable Integrations
+
+Integrate Apple Health or other wearable data sources to populate supported health variables automatically.
+
+### Health Improvement Challenges
+
+Generate short-term habit goals based on established health guidelines.
+
+---
+
+# 15. Safety, Privacy, and Responsible AI
+
+LifeSim is an educational research demonstration, not a medical device.
+
+### User Safety
+
+* Do not predict exact dates of death.
+* Do not claim that simulated interventions have proven causal effects.
+* Do not provide diagnoses.
+* Do not recommend medication changes.
+* Do not present predictions as medical advice.
+* Do not imply that the model can guarantee longer life.
+* Provide age and population applicability limitations.
+* Avoid using the tool to make predictions for minors if the model was trained on adult mortality data.
+
+### Privacy
+
+* Do not require user accounts for the MVP.
+* Avoid collecting names or other directly identifying information.
+* Do not store submitted health information by default.
+* Do not log raw health profiles unnecessarily.
+* Keep user scenario comparisons in browser state when feasible.
+* Never expose API keys in frontend code.
+
+### Prediction Transparency
+
+Clearly identify:
+
+* The dataset used for training.
+* The prediction horizon.
+* The model's limitations.
+* The observational nature of its evidence.
+* The distinction between statistical association and causal effect.
+
+---
+
+# 16. Hackathon Demo
+
+## Recommended Demo Flow
+
+### Step 1: Introduce the Problem
+
+"Every day, we make decisions that affect our health. But what if we could explore how those decisions relate to our long-term future?"
+
+### Step 2: Introduce LifeSim
+
+"LifeSim uses real population health and mortality data to model survival probabilities based on lifestyle and health characteristics."
+
+### Step 3: Enter a Health Profile
+
+Complete the onboarding form.
+
+Show the survival curve generated from the trained model.
+
+### Step 4: Simulate a Different Future
+
+Adjust physical activity, smoking status, or another supported variable.
+
+Demonstrate the survival curve updating.
+
+### Step 5: Compare Two Futures
+
+Display the baseline and modified profile side by side.
+
+Highlight differences in modeled survival probabilities.
+
+### Step 6: Ask the AI Advisor
+
+"What should this person prioritize improving?"
+
+Show the AI interpreting the results and generating evidence-based recommendations.
+
+### Step 7: Explain the Vision
+
+"LifeSim doesn't predict exactly when you'll die. It helps you understand how your current health profile compares with alternative scenarios, so you can make more informed decisions."
+
+---
+
+# 17. Success Criteria
+
+### Technical
+
+* Working survival prediction model.
+* Real mortality-linked training data.
+* Proper handling of right-censored observations.
+* Quantitative model evaluation.
+* Functional frontend/backend integration.
+* Interactive scenario comparison.
+* Reliable deployment.
+
+### Product
+
+* Onboarding completed in under 60 seconds.
+* Survival predictions are clearly presented.
+* Lifestyle parameters are easy to modify.
+* Comparison graphs are visually compelling.
+* AI explanations are understandable.
+* Important limitations are communicated without overwhelming the interface.
+
+### Hackathon
+
+The final product should demonstrate:
+
+**Technical Depth:** Real survival analysis using real-world longitudinal mortality data.
+
+**Practical Relevance:** An accessible way to explore long-term health risk.
+
+**Creative Execution:** Interactive comparisons of alternative future health profiles.
+
+**Strong Presentation:** A polished, visually engaging live demo.
+
+---
+
+# 18. Final Product Vision
+
+LifeSim aims to make long-term health risk understandable, interactive, and personally relevant.
+
+Rather than simply tracking what users have already done, it provides a way to explore how different health and lifestyle profiles relate to future outcomes.
+
+The long-term vision is a personalized health simulation platform that combines longitudinal data, validated predictive models, wearable information, and evidence-based guidance.
+
+**LifeSim — Simulate Your Future. Change Your Present.**
